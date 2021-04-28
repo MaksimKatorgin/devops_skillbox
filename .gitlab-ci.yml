@@ -34,7 +34,7 @@ test_after_build:
 deploy web_srv:
    stage: stage
    script:
-     - cp -r ./html/* /var/www/html
+     - cp -r ./* /var/www/html
      - echo "deploy web_srv----------------------------------"
    when: manual
    tags:
@@ -43,7 +43,6 @@ deploy web_srv:
      refs:
        - tags
        - master
-       - /^release.*$/
    
        
 deploy prod:
