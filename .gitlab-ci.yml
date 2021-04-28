@@ -1,0 +1,58 @@
+stages:
+  - test
+  - build
+  - test2
+  - deploy
+  - stage
+  - prod
+  
+install_env:
+   stage: test
+   script:
+     - echo "install_env"
+
+run_test:
+   stage: test
+   script:
+     - echo "runnning test -------------------------"
+
+linter:
+   stage: test
+   script:
+     - echo "test linter------------------------------"
+      
+build:
+   stage: build
+   script:
+     - echo 'run ./build.sh'
+
+test_after_build:
+   stage: test2
+   script:
+     - echo "test_after_build ----------------------------------"
+     
+deploy web_srv:
+   stage: stage
+   script:
+     - cp -r ./html/* /var/www/html
+     - echo "deploy web_srv----------------------------------"
+   when: manual
+   tags:
+     - devops_skillbox_vscale_shell
+   only:
+     refs:
+       - tags
+       - master
+       - /^release.*$/
+   
+       
+deploy prod:
+   stage: prod
+   script:
+     - ./deploy.sh
+     - echo "deploy PROD ----------------------------------"
+   when: manual
+   only:
+     refs:
+       - tags
+       - master
