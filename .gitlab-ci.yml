@@ -35,8 +35,6 @@ deploy web_srv:
    stage: stage
    script:
      - cp -rf ./html/* /var/www/html
-     - tar -cf ./html.tar ./html
-     - cp -rf ./html.tar /var/www/html
      - echo "deploy web_srv----------------------------------"
    when: manual
    tags:
